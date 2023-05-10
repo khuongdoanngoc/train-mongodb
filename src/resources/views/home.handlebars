@@ -1,0 +1,35 @@
+<div id="myDIV" class="header">
+  <h2>Football Clubs</h2>
+  <form method="post" action="/createClub">
+    <input type="text" id="myInput" name="club" placeholder="Club...">
+    <button type="submit" class="addBtn">Add</button>
+  </form>
+</div>
+<ul id="myUL">
+  {{#each clubs}}
+  <li>
+    {{this.clubs}}
+    <button type="submit" data-id="{{this.id}}" class="close">x</button>
+  </li>
+  {{/each}}
+</ul>
+
+<form name="deleteForm" method="POST"></form>
+
+<script>
+
+  var clubId
+  var buttons = document.querySelectorAll('.close')
+  var deleteForm = document.forms['deleteForm']
+
+  buttons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault()
+      clubId = button.dataset.id
+      deleteForm.action = '/' + clubId + '/delete?_method=DELETE'
+      deleteForm.submit()
+    })
+  })
+
+
+</script>
