@@ -13,8 +13,8 @@ class clubController {
 
     // [POST] /createClub
     async createClub(req, res) {
-        const { club } = req.body 
-        await connection.query(`insert ignore footballclubs (clubs) values ('${club}')`, (err, results) => {
+        const { club } = req.body
+        await connection.query(`insert into footballclubs (clubs) values ('${club}')`, (err, results) => {
             if (err) {
                 console.log(err.stack)
                 res.status(500).json({ message: 'server error!' })
@@ -31,12 +31,27 @@ class clubController {
         await connection.query(`delete from footballclubs where id = ${id}`, (err, results) => {
             if (err) {
                 console.log(err.stack)
-                res.status(500).json({ message: 'server error!' })
+                res.status(500).send('Server Error!')
             } else {
                 res.redirect('/')
             }
         })
     }
+
+    // [PUT] /:id/update
+    async updateClub(req, res) {
+        const id = req.params.id
+        const newClub = req.body.club
+        connection.query(`update footballclubs set clubs = '${newClub}' where id = ${id}`, (err, results) => {
+            if (err) {
+                console.log(err.stack)
+                res.status(500).send('Server Error!')
+            } else {
+                res.redirect('/')
+            }
+        })
+    }
+
 }
 
 module.exports = new clubController()

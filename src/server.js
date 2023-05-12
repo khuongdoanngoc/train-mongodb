@@ -3,7 +3,10 @@ const { engine } = require('express-handlebars')
 const route = require('./routes/route')
 const methodOvevride = require('method-override')
 const app = express()
-const port = 3000
+
+const dotenv = require('dotenv')
+dotenv.config()
+const port = process.env.port || 3000
 
 // connect to DB
 const db = require('./config/db/connectDB')
